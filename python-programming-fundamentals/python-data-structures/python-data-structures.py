@@ -137,3 +137,198 @@ print(f"Highest elevation:{max_elevations} meters")
 # Compute the average elevation
 avg_elevation = sum(elevations) / len(elevations)
 print(f"Average elevation:{avg_elevation:.1f} meters")
+
+
+
+### SETS ###
+# Sets are unordered collections of unique elements, meaning they automatically eliminate duplicates and don’t maintain any particular order. 
+# This makes sets incredibly useful in geospatial programming when you need to work with unique identifiers, remove duplicate entries from datasets, or perform operations like finding common elements between different spatial datasets.
+# Sets are particularly valuable when working with categorical spatial data. 
+# For example, you might want to track unique country codes in a global dataset, identify distinct land cover types in a study area, or maintain a collection of unique coordinate system identifiers. 
+# The automatic duplicate removal feature of sets saves you from having to manually check for and remove repeated values.
+
+# 1. Creating Sets
+# You can create sets in several ways. 
+# You can use curly braces {} to create a set, or use the set() function to convert a list or other iterable into a set. 
+# Here are examples relevant to geospatial work:
+
+# Create a sets of geographic region
+region_visited = {"North America", "Europe", "Asia"}
+print("Regions Visited:", region_visited)
+
+# Create a set of unique country codes from a list (automatically removes duplicates)
+country_codes = ["US", "CA", "MX", "US", "CA"]
+unique_codes = set(country_codes)
+print("Original list:", country_codes)
+print("Unique country codes:", unique_codes)
+
+# Create a set of coordinate system codes
+crs_codes = {"EPSG:4326", "EPSG:3857", "EPSG:32633"}
+print("Coordinate Reference System:", crs_codes)
+
+# 2. Adding Elements to Sets
+# You can add new elements to a set using the add() method.
+# Duplicates will be automatically ignored.
+
+# Add a new region to our visited set
+print("Original set:", region_visited)
+region_visited.add("South America")
+print("Set after adding a new region:", region_visited)
+
+# Try to add a duplicate region (will be ignored)
+region_visited.add("Europe")
+print("Set after attempting to add a duplicate region:", region_visited)
+
+# 3. Removing Elements from Sets
+# You can remove elements from a set using the remove() method.
+# If the element does not exist, remove() will raise a KeyError.
+# region_visited.remove("Asia")
+# print("Set after removing 'Asia':", region_visited)
+
+# To avoid this, you can use the discard() method, which will not raise an error if the element is not found.
+# region_visited.discard("South America") 
+# print("Set after discarding 'South America':", region_visited)
+
+# 4. Set Practical Operations
+# Sets provide useful operations for comparing different spatial datasets. 
+# For example, you might want to find the common countries between two different datasets, or identify the unique countries in a dataset. 
+# The intersection() method returns a set of elements that are common to both sets, while the union() method returns a set of all elements from both sets.
+# The difference() method returns a set of elements that are in one set but not in the other.
+# Here the examples:
+
+# Two different survey areas with their observed species
+area_a_species = {"Deer", "Fox", "Rabbit", "tiger"}
+area_b_species = {"Rabbit", "Bear", "Wolf", "Deer"}
+
+print("Species in Area A:", area_a_species)
+print("Species in Area B:", area_b_species)
+
+# Find common species between the two areas
+common_species = area_a_species.intersection(area_b_species)
+print("Species found in both areas:", common_species)
+
+# Find species unique to Area A
+unique_to_area_a = area_a_species.difference(area_b_species)
+print("Species only in Area A:", unique_to_area_a)
+
+# Find species unique to Area B
+unique_to_area_b = area_b_species.difference(area_a_species)
+print("Species only in Area B:", unique_to_area_b)    
+
+# Find all species across both areas
+all_species = area_a_species.union(area_b_species)
+print("All species found:", all_species)
+
+# 5. Set Membership Testing
+# Sets provide a fast way to test for membership, which is useful when checking if a particular identifier or value exists in a dataset.
+
+# Check if we've visited a particular region
+if "Asia" in region_visited:
+    print("We have visited Asia.")
+
+if "Africa" in region_visited:
+    print("We have visited Africa.")
+else:       
+    print("We have not visited Africa.")
+
+
+
+### DICTIONARIES ###
+# Dictionaries are collections of key-value pairs where each key is unique and maps to a specific value. 
+# This structure is perfect for storing related information about geographic features, where you need to associate descriptive attributes with specific identifiers. 
+# In geospatial programming, dictionaries are extensively used to store feature attributes, metadata about datasets, configuration settings, and any situation where you need to organize information by meaningful names rather than numeric positions. 
+# Think of dictionaries as lookup tables or filing systems where you can quickly find information using a descriptive key. 
+# For example, instead of remembering that population data is stored in position 2 of a list, you can simply use the key “population” to access that information directly. 
+# This makes your code more readable and less prone to errors.
+
+# 1. Creating Dictionaries
+# Dictionaries are created using curly braces {} with key-value pairs separated by commas and keys separated from values by colons.
+# Here are some examples relevant to geospatial work:
+
+# Dictionary storing attributes of a city
+new_york_info = {
+    "name" : "New York City",
+    "population" : 8419600,
+    "coordinates" : (40.7128, -74.0060),
+    "country" : "USA",
+    "established" : 1624,
+}
+print("New York City Info:", new_york_info)
+
+# Dictionary for geographic survey point
+survey_point = {
+    "id" : "SP001",
+    "latitude" : 34.0522,
+    "longitude" : -118.2437,
+    "elevation" : 89.0,
+    "land_cover" : "Urban",
+    "date_surveyed" : "2023-05-15",
+    "description" : "Survey point in Los Angeles",
+}
+print("Survey Point Info:", survey_point)
+
+# 2. Accessing Dictionary Values
+# You can access values in a dictionary using their corresponding keys in square brackets or with the get() method.
+
+# Accessing specific infromation about New York City
+city_name = new_york_info["name"]
+city_population = new_york_info.get("population")   
+city_coordinates = new_york_info["coordinates"]
+print(f"{city_name} has a population of {city_population} and is located at coordinates {city_coordinates}.")
+
+# Keep in mind that if you try to access a key that doesn’t exist in a dictionary, you’ll get a KeyError error. 
+# To avoid this, you can use the get() method as introduced below to safely access a key and provide a default value if the key doesn’t exist.
+
+# 3. Safe Acces with get() Method
+# The get() method allows you to access a value associated with a key while providing a default value if the key is not found. 
+# This is particularly useful when working with datasets that may have missing attributes.
+
+# Safe access to dictionary value
+area = new_york_info.get("area_km2", "Area information not available")
+timezone = new_york_info.get("timezone", "Timezone information not available")
+
+print(f"Area:{area}")
+print(f"Timezone:{timezone}")
+
+# 4. Adding and Updating Values
+# You can add new key-value pairs or update existing ones.
+
+# Add new information to our New York Dictionary
+new_york_info["area_km2"] = 783.8 # Adding area in square kilometers
+new_york_info["timezone"] = "Eastern Standard Time" # Adding timezone information
+new_york_info["population"] = 8500000 # Updating population information
+print("Updated New York City Info:", new_york_info)
+
+# 5. Working with Geographic Feature Collection
+# Dictionaries can also be used to represent collections of geographic features, where each feature is identified by a unique key (like an ID) and its attributes are stored as a nested dictionary.
+
+# Collection of world capital
+world_capitals = {
+    "Japan" : {
+        "capital" : "Tokyo",
+        "coordinates" : (35.6895, 139.6917),
+        "population" : 13929286,
+    },
+    "USA" : {
+        "capital" : "Washington, D.C.",
+        "coordinates" : (38.9072, -77.0369),
+        "population" : 705749,
+    },
+    "France" : {
+        "capital" : "Paris",
+        "coordinates" : (48.8566, 2.3522),
+        "population" : 2140526,
+    },
+    "UK" :{
+        "capital" : "London",
+        "coordinates" : (51.5074, -0.1278),
+        "population" : 8982000,
+    },
+}
+# Access information about a specific capital
+UK_capital_info = world_capitals["UK"]
+print(f"UK capital: {UK_capital_info['capital']}, Coordinates: {UK_capital_info['coordinates']}, Population: {UK_capital_info['population']}")
+
+# As you can see from the example above, a dictionary can be nested within another dictionary. 
+# This is useful when you need to store information about a city, and then store information about the city’s population, coordinates, and country.
+
