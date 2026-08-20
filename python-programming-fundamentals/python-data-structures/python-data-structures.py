@@ -332,3 +332,40 @@ print(f"UK capital: {UK_capital_info['capital']}, Coordinates: {UK_capital_info[
 # As you can see from the example above, a dictionary can be nested within another dictionary. 
 # This is useful when you need to store information about a city, and then store information about the city’s population, coordinates, and country.
 
+# 6. Dictionary Methods for Data Exploration
+# Dictionaries provide useful methods for exploring your data, such as keys() , values() , and items() . 
+# These methods return views of the dictionary’s keys, values, and key-value pairs, respectively.
+# They are useful for iterating over the dictionary and for checking if a key exists in the dictionary. We will learn more about these methods in the Loops and Conditional Statements chapter. 
+# Below is an example of how to use these methods.
+
+# Explore the structure of our New York dictionary
+print("Key in new_york_info:", list(new_york_info.keys()))
+print("Value in new_york_info:", list(new_york_info.values()))
+
+# Check if a key exists
+if "coordinates" in new_york_info:
+    print("Coordinate information is available")
+
+# Get all countries in our capitals dictionary
+countries = list(world_capitals.keys()) 
+print("Countries in our database:", countries)
+
+# 7. Practical Example: GPS Waypoint Management
+# Here’s a practical example of using dictionaries to manage GPS waypoints:
+
+# GPS waypoiint with comprehensive metadata
+waypoint = {
+    "id": "WP001",
+    "name": "Trail Start",
+    "latitude": 45.3311,
+    "longitude": -121.7113,
+    "elevation": 1200,
+    "description": "Beginning of Pacific Crest Trail section",
+    "waypoint_type": "trailhead",
+    "facilities": ["parking", "restrooms", "water"],
+    "difficulty": "easy",
+}
+print(f"waypoint: {waypoint['name']}")
+print(f"Location: {waypoint["latitude"]}, {waypoint["longitude"]}")
+print(f"Elevation: {waypoint["elevation"]} meters")
+print(f"Available facilities: {','.join(waypoint['facilities'])}")
